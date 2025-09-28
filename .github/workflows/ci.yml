@@ -1,13 +1,15 @@
 name: CI
+
 on:
   push:
   pull_request:
 
 jobs:
   tests:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest   # <- importante, dónde corre el job
+
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4   # clona tu repo en el runner
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -20,4 +22,6 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run tests
-        run: pytest -q
+        run: python -m pytest -q
+        env:
+          PYTHONPATH: ${{ github.workspace }}
